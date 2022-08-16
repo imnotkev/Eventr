@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import useDocumentTitle from "../Components/UI/DynamicTitle";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../UserContext";
+import { Login, AccessibilityNew } from "@mui/icons-material";
 
-const Login = () => {
+const LogIn = () => {
   useDocumentTitle("Sign In | Eventr");
   const navigate = useNavigate();
+  const { user, logIn } = useContext(UserContext);
+
+  React.useEffect(() => {
+    {
+      user && navigate("/start");
+    }
+  }, [user]);
+
   return (
     <section>
       <div className="container">
@@ -34,17 +44,20 @@ const Login = () => {
                     required
                     placeholder="***********"
                   />
-                  <span className="btn form__btn btn--missing" type="submit">
+                  <span className="btn login__btn btn--missing" type="submit">
                     Logga in
                   </span>
                 </form>
                 <button
-                  className="btn form__btn"
-                  type="submit"
-                  onClick={() => navigate("/start")}
+                  className="btn login__btn"
+                  onClick={() => {
+                    logIn();
+                  }}
                 >
                   Demo
                 </button>
+                <Login className="icon-1" />
+                <AccessibilityNew className="icon-2" />
               </div>
             </div>
           </div>
@@ -54,4 +67,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LogIn;

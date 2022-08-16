@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { db } from "../Firebase/init";
 import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { useParams, useNavigate } from "react-router-dom";
 import { Home, History, ArrowBack } from "@mui/icons-material";
 import useDocumentTitle from "../Components/UI/DynamicTitle";
+import UserContext from "../UserContext";
 
 const Event = () => {
   useDocumentTitle("Redigera händelse | Eventr");
@@ -11,6 +12,7 @@ const Event = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = React.useState(true);
   const [popUp, setPopUp] = React.useState(false);
+  const { user } = useContext(UserContext);
 
   /* FORM-VALUES */
   const [date, setDate] = React.useState("");
@@ -58,8 +60,10 @@ const Event = () => {
   }
 
   React.useEffect(() => {
-    getPostById();
-  }, []);
+    {
+      user ? getPostById() : navigate("/");
+    }
+  }, [user]);
 
   return (
     <main className={popUp ? "pop-up__background" : undefined}>
@@ -100,7 +104,7 @@ const Event = () => {
                       className="menu__form"
                       onSubmit={(e) => updatePost(e)}
                     >
-                      <label htmlFor="date">* Datum:</label>
+                      <label htmlFor="date">Datum:</label>
                       <input
                         type="date"
                         id="date"
@@ -108,7 +112,7 @@ const Event = () => {
                         value={date}
                         onChange={(e) => setDate(e.target.value)}
                       />
-                      <label htmlFor="time">* Tid:</label>
+                      <label htmlFor="time">Tid:</label>
                       <input
                         type="time"
                         id="time"
@@ -116,7 +120,7 @@ const Event = () => {
                         value={time}
                         onChange={(e) => setTime(e.target.value)}
                       />
-                      <label htmlFor="alarm">* Typ av larm:</label>
+                      <label htmlFor="alarm">Typ av larm:</label>
                       <select
                         list="alarm"
                         required
@@ -131,7 +135,7 @@ const Event = () => {
                         <option value="Driftlarm">Driftlarm</option>
                         <option value="Övrigt/annat">Övrigt/annat</option>
                       </select>
-                      <label htmlFor="object">* Objekt:</label>
+                      <label htmlFor="object">Objekt:</label>
                       <input
                         type="text"
                         id="object"
@@ -139,7 +143,7 @@ const Event = () => {
                         value={object}
                         onChange={(e) => setObject(e.target.value)}
                       />
-                      <label htmlFor="location">* Kommun:</label>
+                      <label htmlFor="location">Kommun:</label>
                       <select
                         list="location"
                         required
@@ -155,7 +159,7 @@ const Event = () => {
                         <option value="SFS">Storfors</option>
                         <option value="LSF">Lesjöfors</option>
                       </select>
-                      <label htmlFor="action">* Åtgärd:</label>
+                      <label htmlFor="action">Åtgärd:</label>
                       <input
                         type="text"
                         id="action"
@@ -163,7 +167,7 @@ const Event = () => {
                         value={action}
                         onChange={(e) => setAction(e.target.value)}
                       />
-                      <label htmlFor="operator">* Operatör:</label>
+                      <label htmlFor="operator">Operatör:</label>
                       <input
                         type="text"
                         id="operator"

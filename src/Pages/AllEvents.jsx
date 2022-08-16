@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Delete,
   ArrowBack,
   Settings,
   RestartAlt,
   Forward,
+  NoteAdd,
+  Home,
 } from "@mui/icons-material";
 import { db } from "../Firebase/init";
 import {
@@ -19,6 +21,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import Pagination from "../Components/UI/Pagination";
 import useDocumentTitle from "../Components/UI/DynamicTitle";
+import UserContext from "../UserContext";
 
 const History = () => {
   useDocumentTitle("Tidigare händelser | Eventr");
@@ -33,6 +36,7 @@ const History = () => {
   const [dateBtnActive, setDateBtnActive] = React.useState(false);
   const colRef = collection(db, "events");
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
 
   /* Pagination */
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -134,8 +138,10 @@ const History = () => {
   }
 
   React.useEffect(() => {
-    getDate();
-  }, []);
+    {
+      user ? getDate() : navigate("/");
+    }
+  }, [user]);
 
   return (
     <main className={popUp ? "pop-up__background" : undefined}>
@@ -158,7 +164,7 @@ const History = () => {
                   </>
                 )}
               </div>
-              <div className="menu__body history__body">
+              <div className="menu__body">
                 {loading ? (
                   <>
                     <div className="skeleton event__header--skeleton"></div>
@@ -241,10 +247,22 @@ const History = () => {
                           Inga händelser hittades!
                         </h3>
                         <h4 className="event__sub-title no-results__sub-title">
-                          Justera filter eller nollställ på knappen nedan:
+                          Justera filter eller:
                         </h4>
                         <button className="btn" onClick={() => getDate()}>
                           <RestartAlt /> Nollställ
+                        </button>
+                        <button
+                          className="btn"
+                          onClick={() => navigate("/add")}
+                        >
+                          <NoteAdd /> Lägg till händelse
+                        </button>
+                        <button
+                          className="btn"
+                          onClick={() => navigate("/add")}
+                        >
+                          <Home /> Tillbaka till start
                         </button>
                       </>
                     )}

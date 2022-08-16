@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   AccessTime,
   NoteAdd,
@@ -11,6 +11,7 @@ import { db } from "../Firebase/init";
 import { collection, addDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import useDocumentTitle from "../Components/UI/DynamicTitle";
+import UserContext from "../UserContext";
 
 const Add = () => {
   useDocumentTitle("Lägg till händelse | Eventr");
@@ -26,6 +27,7 @@ const Add = () => {
 
   /* VARIABLES */
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
 
   /* FUNCTIONS */
   function createEvent(e) {
@@ -79,8 +81,10 @@ const Add = () => {
   }
 
   React.useEffect(() => {
-    getDateAndTime();
-  }, []);
+    {
+      user ? getDateAndTime() : navigate("/");
+    }
+  }, [user]);
 
   return (
     <main className={popUp ? "pop-up__background" : undefined}>
@@ -101,7 +105,7 @@ const Add = () => {
                   className="menu__form"
                   onSubmit={(e) => createEvent(e)}
                 >
-                  <label htmlFor="date">* Datum:</label>
+                  <label htmlFor="date">Datum:</label>
                   <input
                     type="date"
                     id="date"
@@ -109,7 +113,7 @@ const Add = () => {
                     onChange={(e) => setDate(e.target.value)}
                     value={date}
                   />
-                  <label htmlFor="time">* Tid:</label>
+                  <label htmlFor="time">Tid:</label>
                   <input
                     type="time"
                     id="time"
@@ -117,7 +121,7 @@ const Add = () => {
                     onChange={(e) => setTime(e.target.value)}
                     value={time}
                   />
-                  <label htmlFor="alarm">* Typ av larm:</label>
+                  <label htmlFor="alarm">Typ av larm:</label>
                   <select
                     list="alarm"
                     required
@@ -132,14 +136,14 @@ const Add = () => {
                     <option value="Driftlarm">Driftlarm</option>
                     <option value="Övrigt/annat">Övrigt/annat</option>
                   </select>
-                  <label htmlFor="object">* Objekt:</label>
+                  <label htmlFor="object">Objekt:</label>
                   <input
                     type="text"
                     id="object"
                     required
                     onChange={(e) => setObject(e.target.value)}
                   />
-                  <label htmlFor="location">* Kommun:</label>
+                  <label htmlFor="location">Kommun:</label>
 
                   <select
                     list="location"
@@ -156,14 +160,14 @@ const Add = () => {
                     <option value="SFS">Storfors</option>
                     <option value="LSF">Lesjöfors</option>
                   </select>
-                  <label htmlFor="action">* Åtgärd:</label>
+                  <label htmlFor="action">Åtgärd:</label>
                   <input
                     type="text"
                     id="action"
                     required
                     onChange={(e) => setAction(e.target.value)}
                   />
-                  <label htmlFor="operator">* Operatör:</label>
+                  <label htmlFor="operator">Operatör:</label>
                   <input
                     type="text"
                     id="operator"
@@ -202,7 +206,7 @@ const Add = () => {
             </h4>
             <button className="btn" onClick={() => addMoreEvents()}>
               <NoteAdd />
-              Lägg till ny
+              Lägg till ny händelse
             </button>
             <button className="btn" onClick={() => navigate("/events")}>
               <History />
@@ -211,15 +215,6 @@ const Add = () => {
             <button className="btn" onClick={() => navigate("/start")}>
               <Home />
               Tillbaka till start
-            </button>
-            <button
-              className="btn"
-              onClick={() => {
-                navigate("/");
-              }}
-            >
-              <Logout />
-              Logga ut
             </button>
           </div>
         </div>

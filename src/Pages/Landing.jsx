@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   NoteAdd,
   History,
@@ -10,13 +10,21 @@ import {
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import useDocumentTitle from "../Components/UI/DynamicTitle";
+import UserContext from "../UserContext";
 
 const Landing = () => {
+  const { user, logOut } = useContext(UserContext);
   useDocumentTitle("Start | Eventr");
   const navigate = useNavigate();
 
+  React.useEffect(() => {
+    {
+      !user && navigate("/");
+    }
+  }, [user]);
+
   return (
-    <header>
+    <main>
       <div className="container">
         <div className="row">
           <div className="menu--wrapper">
@@ -34,18 +42,18 @@ const Landing = () => {
                   <History />
                   Visa händelser
                 </button>
-                <button className="btn btn--missing">
+                <span className="btn btn--missing">
                   <CalendarMonth />
                   Kalender
-                </button>
-                <button className="btn btn--missing">
+                </span>
+                <span className="btn btn--missing">
                   <Settings />
                   Inställningar
-                </button>
+                </span>
                 <button
                   className="btn"
                   onClick={() => {
-                    navigate("/");
+                    logOut();
                   }}
                 >
                   <Logout />
@@ -58,7 +66,7 @@ const Landing = () => {
           </div>
         </div>
       </div>
-    </header>
+    </main>
   );
 };
 
