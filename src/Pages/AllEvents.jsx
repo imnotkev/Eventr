@@ -8,7 +8,8 @@ import {
   NoteAdd,
   Home,
 } from "@mui/icons-material";
-import { db } from "../Firebase/init";
+import { db, auth } from "../Firebase/init";
+
 import {
   query,
   collection,
@@ -18,6 +19,7 @@ import {
   deleteDoc,
   orderBy,
 } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import Pagination from "../Components/UI/Pagination";
 import useDocumentTitle from "../Components/UI/DynamicTitle";
@@ -36,7 +38,7 @@ const History = () => {
   const [dateBtnActive, setDateBtnActive] = React.useState(false);
   const colRef = collection(db, "events");
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
+  const { user, setUser, setLoggedIn } = useContext(UserContext);
 
   /* Pagination */
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -138,10 +140,14 @@ const History = () => {
   }
 
   React.useEffect(() => {
-    {
-      user ? getDate() : navigate("/");
-    }
-  }, [user]);
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+        setLoggedIn(true);
+        getDate();
+      } else navigate("/");
+    });
+  }, []);
 
   return (
     <main className={popUp ? "pop-up__background" : undefined}>
@@ -150,7 +156,9 @@ const History = () => {
           <div className="menu--wrapper">
             <div className="menu">
               <div className="menu__header">
-                {loading ? (
+                {!user ? (
+                  <div className="skeleton menu__title--skeleton"></div>
+                ) : loading ? (
                   <h2 className="menu__title">Laddar händelser..</h2>
                 ) : (
                   <>
@@ -260,7 +268,7 @@ const History = () => {
                         </button>
                         <button
                           className="btn"
-                          onClick={() => navigate("/add")}
+                          onClick={() => navigate("/start")}
                         >
                           <Home /> Tillbaka till start
                         </button>

@@ -1,20 +1,37 @@
 import { createContext, useState } from "react";
+import { auth } from "../src/Firebase/init";
+import { signOut } from "firebase/auth";
 
 const UserContext = createContext();
 
 export function UserProvider({ children }) {
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(false);
 
-  const logIn = () => {
-    setUser(true);
+  const logIn = (user) => {
+    setUser(user);
+    setLoggedIn(true);
+    console.log("loggar in");
   };
 
   const logOut = () => {
+    signOut(auth);
     setUser(false);
+    setLoggedIn(false);
+    console.log("loggar ut");
   };
 
   return (
-    <UserContext.Provider value={{ user, logIn, logOut }}>
+    <UserContext.Provider
+      value={{
+        user,
+        loggedIn,
+        setUser,
+        setLoggedIn,
+        logIn,
+        logOut,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

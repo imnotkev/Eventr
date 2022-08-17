@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { CalendarMonth, Logout, Person } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../UserContext";
+import "animate.css";
 
 const Nav = () => {
   const navigate = useNavigate();
@@ -9,28 +10,17 @@ const Nav = () => {
 
   return (
     <nav>
-      <div
-        className={
-          user ? "nav__container" : "nav__container nav__container--logged-out"
-        }
-      >
-        <div className="nav__container--left">
-          {user ? (
-            <h1
-              className="logo nav__logo"
-              onClick={() => {
-                navigate("/start");
-              }}
-            >
-              <CalendarMonth />
-              Eventr
-            </h1>
-          ) : (
-            <h1 className="logo nav__logo logo__logged-out">
-              <CalendarMonth />
-              Eventr
-            </h1>
-          )}
+      <div className="nav__container ">
+        <div className="nav__container--left animate__animated animate__fadeIn">
+          <h1
+            className="logo nav__logo"
+            onClick={() => {
+              navigate("/start");
+            }}
+          >
+            <CalendarMonth />
+            Eventr
+          </h1>
           {user && (
             <ul className="nav__list">
               <li className="nav__lists">
@@ -57,11 +47,7 @@ const Nav = () => {
           )}
         </div>
         {user && (
-          <div className="nav__container--right">
-            <span className="nav__list--anchor--user">
-              <Person />
-              demo user
-            </span>
+          <div className="nav__container--right animate__animated animate__fadeIn">
             <span
               className="nav__list--anchor--primary"
               onClick={() => {

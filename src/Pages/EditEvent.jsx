@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
-import { db } from "../Firebase/init";
-import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
+import { db, auth } from "../Firebase/init";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 import { useParams, useNavigate } from "react-router-dom";
 import { Home, History, ArrowBack } from "@mui/icons-material";
 import useDocumentTitle from "../Components/UI/DynamicTitle";
@@ -12,7 +13,7 @@ const Event = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = React.useState(true);
   const [popUp, setPopUp] = React.useState(false);
-  const { user } = useContext(UserContext);
+  const { setUser, setLoggedIn } = useContext(UserContext);
 
   /* FORM-VALUES */
   const [date, setDate] = React.useState("");
@@ -60,10 +61,14 @@ const Event = () => {
   }
 
   React.useEffect(() => {
-    {
-      user ? getPostById() : navigate("/");
-    }
-  }, [user]);
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+        setLoggedIn(true);
+        getPostById();
+      } else navigate("/");
+    });
+  }, []);
 
   return (
     <main className={popUp ? "pop-up__background" : undefined}>
