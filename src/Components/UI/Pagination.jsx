@@ -9,7 +9,7 @@ const Pagination = ({ eventsPerPage, totalEvents, paginate, currentPage }) => {
   }
   return (
     <>
-      <ul className="pagination">
+      <ul className="pagination animate__animated animate__fadeIn animate__faster">
         {pageNumbers.map((number) => (
           <li key={number} className="pagination__list">
             <button

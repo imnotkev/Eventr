@@ -33,21 +33,17 @@ const Landing = () => {
       <div className="container">
         <div className="row">
           <div className="menu--wrapper">
-            <div className="menu">
-              <div className="menu__header">
+            <div className="menu__body">
+              <div className="menu__content animate__animated animate__fadeIn animate__faster">
                 {!user ? (
                   <div className="skeleton menu__title--skeleton"></div>
                 ) : (
                   <h2 className="menu__title">Välkommen till Eventr!</h2>
                 )}
-              </div>
-              <div className="menu__body">
                 {!user ? (
                   <div className="menu__loading">
                     {" "}
                     <div className="skeleton sub-title__skeleton"></div>
-                    <div className="skeleton btn__skeleton"></div>
-                    <div className="skeleton btn__skeleton"></div>
                     <div className="skeleton btn__skeleton"></div>
                     <div className="skeleton btn__skeleton"></div>
                     <div className="skeleton btn__skeleton"></div>
@@ -63,14 +59,6 @@ const Landing = () => {
                       <History />
                       Visa händelser
                     </button>
-                    <span className="btn btn--missing">
-                      <CalendarMonth />
-                      Kalender
-                    </span>
-                    <span className="btn btn--missing">
-                      <Settings />
-                      Inställningar
-                    </span>
                     <button
                       className="btn"
                       onClick={() => {
@@ -80,11 +68,11 @@ const Landing = () => {
                       <Logout />
                       Logga ut
                     </button>
-                    <FireExtinguisher className="icon-1" />
-                    <NotificationsNone className="icon-2" />
                   </>
                 )}
               </div>
+              <FireExtinguisher className="icon-1" />
+              <NotificationsNone className="icon-2" />
             </div>
           </div>
         </div>

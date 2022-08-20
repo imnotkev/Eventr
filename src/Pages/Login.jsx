@@ -12,38 +12,42 @@ const LogIn = () => {
   const { setUser, setLoggedIn, logIn } = useContext(UserContext);
   const [userEmail, setUserEmail] = React.useState("");
   const [userPassword, setUserPassword] = React.useState("");
-  const [popUp, setPopUp] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const [faultyLogin, setFaultyLogin] = React.useState(false);
 
   function logInUser(e) {
     e.preventDefault();
-    setPopUp(true);
+    setLoading(true);
     setFaultyLogin(false);
-    signInWithEmailAndPassword(auth, `${userEmail}`, `${userPassword}`)
-      .then(({ user }) => {
-        logIn({ user });
-        setPopUp(false);
-      })
-      .catch(() => {
-        setFaultyLogin(true);
-        setPopUp(false);
-        setUserEmail("");
-        setUserPassword("");
-      });
+    setTimeout(() => {
+      signInWithEmailAndPassword(auth, `${userEmail}`, `${userPassword}`)
+        .then(({ user }) => {
+          logIn({ user });
+          setLoading(false);
+        })
+        .catch(() => {
+          setLoading(false);
+          setFaultyLogin(true);
+          setUserEmail("");
+          setUserPassword("");
+        });
+    }, 240);
   }
 
-  function logInDemo() {
-    setPopUp(true);
-    setFaultyLogin(false);
-    signInWithEmailAndPassword(auth, `demo@gmail.com`, `password`)
-      .then(({ user }) => {
-        logIn({ user });
-        setPopUp(false);
-      })
-      .catch(() => {
-        setFaultyLogin(true);
-      });
-  }
+  // function logInDemo() {
+  //   setLoading(true);
+  //   setFaultyLogin(false);
+  //   setTimeout(() => {
+  //     signInWithEmailAndPassword(auth, `demo@gmail.com`, `password`)
+  //       .then(({ user }) => {
+  //         logIn({ user });
+  //         setLoading(false);
+  //       })
+  //       .catch(() => {
+  //         setFaultyLogin(true);
+  //       });
+  //   }, 240);
+  // }
 
   React.useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -56,82 +60,85 @@ const LogIn = () => {
   }, []);
 
   return (
-    <section className={popUp ? "pop-up__background" : undefined}>
+    <section>
       <div className="container">
         <div className="row">
           <div className="menu--wrapper">
-            <div className="menu">
-              <div className="menu__header">
-                <h2 className="menu__title">Vänligen logga in:</h2>
-              </div>
+            {loading ? (
               <div className="menu__body">
-                {faultyLogin && (
-                  <div className="faulty-login">
-                    Fel e-postadress eller lösenord! <br />
-                    Försök igen.
-                  </div>
-                )}
-                <form onSubmit={(e) => logInUser(e)} className="login__form">
-                  <label htmlFor="email" className="login__label">
-                    Email:
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    required
-                    placeholder="example@domain.com"
-                    value={userEmail}
-                    onChange={(e) => setUserEmail(e.target.value)}
-                  />
-                  <label htmlFor="password" className="login__label">
-                    Lösenord:
-                  </label>
-                  <input
-                    type="password"
-                    id="password"
-                    required
-                    placeholder="***********"
-                    value={userPassword}
-                    onChange={(e) => setUserPassword(e.target.value)}
-                  />
-                  {!userPassword || !userEmail ? (
-                    <span className="btn login__btn btn--missing" type="submit">
-                      Logga in
-                    </span>
-                  ) : (
-                    <button className="btn login__btn" type="submit">
-                      Logga in
-                    </button>
+                <div className="spinning-dots"></div>
+                <Login className="icon-1" />
+                <AccessibilityNew className="icon-2" />
+              </div>
+            ) : (
+              <div className="menu__body">
+                <div className="menu__content  animate__animated animate__fadeIn animate__faster">
+                  <h2 className="menu__title">Logga in:</h2>
+                  {faultyLogin && (
+                    <div className="faulty-login">
+                      Fel e-postadress eller lösenord! <br />
+                      Försök igen.
+                    </div>
                   )}
-                </form>
-                {/* <button
-                  className="btn login__btn"
-                  onClick={() => {
-                    logInDemo();
-                  }}
-                >
-                  Demo
-                </button> */}
-                <div className="demo-login">
-                  För demo: <br />
-                  demo@gmail.com <br />
-                  password
+                  <form onSubmit={(e) => logInUser(e)} className="login__form">
+                    <label htmlFor="email" className="login__label">
+                      Email:
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      required
+                      placeholder="example@domain.com"
+                      value={userEmail}
+                      onChange={(e) => setUserEmail(e.target.value)}
+                      className="login__input"
+                    />
+                    <label htmlFor="password" className="login__label">
+                      Lösenord:
+                    </label>
+                    <input
+                      type="password"
+                      id="password"
+                      required
+                      placeholder="***********"
+                      value={userPassword}
+                      onChange={(e) => setUserPassword(e.target.value)}
+                      className="login__input"
+                    />
+                    {!userPassword || !userEmail ? (
+                      <span
+                        className="btn login__btn btn--missing"
+                        type="submit"
+                      >
+                        Logga in
+                      </span>
+                    ) : (
+                      <button className="btn login__btn" type="submit">
+                        Logga in
+                      </button>
+                    )}
+                  </form>
+                  {/* <button
+                    className="btn login__btn"
+                    onClick={() => {
+                      logInDemo();
+                    }}
+                  >
+                    Demo
+                  </button> */}
+                  <div className="demo-login">
+                    För demo: <br />
+                    demo@gmail.com <br />
+                    password
+                  </div>
                 </div>
                 <Login className="icon-1" />
                 <AccessibilityNew className="icon-2" />
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
-      {popUp && (
-        <div className="menu__pop-up--window">
-          <div className="pop-up">
-            <h4 className="menu__sub-title pop-up__title">Loggar in..</h4>
-            <div className="double-up"></div>
-          </div>
-        </div>
-      )}
     </section>
   );
 };
