@@ -110,7 +110,7 @@ select {
   margin-bottom: 16px;
   font-size: 16px;
   height: 52px;
-  max-width: 350px;
+  margin: 0 8px 16px 8px;
 }
 
 input:focus,
@@ -124,7 +124,7 @@ select:focus {
 }
 
 label {
-  margin: 0 0 8px 2px;
+  margin: 0 0 8px 12px;
   font-weight: bold;
   font-size: 18px;
   font-weight: 700;
@@ -141,7 +141,7 @@ textarea {
   align-items: center;
   justify-content: center;
   width: 100%;
-  max-width: 350px;
+  max-width: 384px;
   padding: 16px 32px;
   margin-bottom: 16px;
   text-transform: uppercase;
@@ -454,6 +454,7 @@ MENU
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   z-index: 1;
   max-width: 800px;
@@ -465,24 +466,24 @@ MENU
   align-items: center;
   flex-wrap: wrap;
   width: 100%;
-  padding: 0 16px;
+
 }
 
 .form__input {
   display: flex;
   flex-direction: column;
   width: 50%;
-  padding: 0 16px;
 }
 
 .form__btn--wrapper {
-  padding: 0 16px;
+  padding: 0 8px;
   width: 50%;
-  margin-top: 12px;
+  margin-top: 16px;
 }
 
 .form__btn {
   margin: 0;
+  max-width: none;
 }
 
 .btn--missing {
@@ -513,8 +514,14 @@ MENU
 }
 
 .event-edit {
-  max-width: 732px;
-  margin: 0 0 16px 0;
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+
+.event-edit .event {
+  margin-top: 0;
 }
 
 .event-edit .event__right-col {
@@ -765,7 +772,7 @@ MENU
 }
 
 .btn__skeleton {
-  max-width: 350px;
+  max-width: 384px;
   width: 100%;
   height: 62px;
   margin: 16px 0 12px 0;
@@ -774,14 +781,24 @@ MENU
 
 .event__header--skeleton {
   width: 100%;
-  height: 52px
+  height: 40px;
+  margin-bottom: 0;
 }
 
 .event__skeleton {
   width: 100%;
   height: 84px;
   border-radius: 4px;
-  margin-bottom: 24px;
+  margin-top: 16px;
+  margin-bottom: 0;
+}
+
+.event-edit__skeleton {
+  width: 100%;
+  height: 84px;
+  border-radius: 4px;
+  margin-top: 0px;
+  margin-bottom: 16px;
 }
 
 .label__skeleton {
@@ -789,14 +806,15 @@ MENU
   width: 100%;
   height: 22px;
   border-radius: 4px;
-  margin: 0 0 8px 2px;
+  margin: 0 0 8px 12px;
 }
 
 .input__skeleton {
-  max-width: 350px;
+  max-width: 384px;
   width: 100%;
   height: 52px;
   border-radius: 4px;
+  margin: 0 8px 16px 8px;
 }
 
 .footer__anchor--skeleton {

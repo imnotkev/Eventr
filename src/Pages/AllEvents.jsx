@@ -178,7 +178,6 @@ const History = () => {
               {loading ? (
                 <>
                   <div className="skeleton event__header--skeleton"></div>
-
                   <div className="skeleton event__skeleton"></div>
                   <div className="skeleton event__skeleton"></div>
                   <div className="skeleton event__skeleton"></div>
@@ -319,7 +318,7 @@ const History = () => {
                       Antal händelser: {results.length}
                     </h3>
                   )}
-                  {results.length > 6 && (
+                  {results.length > 4 && (
                     <Pagination
                       eventsPerPage={eventsPerPage}
                       totalEvents={results.length}

@@ -85,6 +85,7 @@ const Event = () => {
               {loading ? (
                 <div className="menu__content animate__animated animate__fadeIn animate__faster">
                   <div className="skeleton sub-title__skeleton"></div>
+                  <div className="skeleton event-edit__skeleton event-edit"></div>
                   <div className="menu__form">
                     <div className="menu__form-half">
                       <div className="form__input">
@@ -132,26 +133,28 @@ const Event = () => {
                     <ArrowBack />
                   </button>
                   <h3 className="menu__sub-title">Redigera händelse:</h3>
-                  <div className="event event-edit animate__animated animate__fadeIn animate__faster">
-                    <div className="event__left-col">
-                      <div className="col__container">
-                        <h3 className="event__time">{time}</h3>
-                        <p className="event__date">{date}</p>
+                  <div className="event-edit">
+                    <div className="event animate__animated animate__fadeIn animate__faster">
+                      <div className="event__left-col">
+                        <div className="col__container">
+                          <h3 className="event__time">{time}</h3>
+                          <p className="event__date">{date}</p>
+                        </div>
+                        <div className="col__container">
+                          <h4 className="event__location">{location}</h4>
+                        </div>
+                        <div className="col__container">
+                          <h3 className="event__title">
+                            {alarm} - {object}
+                          </h3>
+                          <p className="event__action">{action}</p>
+                        </div>
                       </div>
-                      <div className="col__container">
-                        <h4 className="event__location">{location}</h4>
+                      <div className="event__right-col">
+                        <h4 className="event__operator">{operator}</h4>
                       </div>
-                      <div className="col__container">
-                        <h3 className="event__title">
-                          {alarm} - {object}
-                        </h3>
-                        <p className="event__action">{action}</p>
-                      </div>
+                      <div className="event__edit-col"></div>
                     </div>
-                    <div className="event__right-col">
-                      <h4 className="event__operator">{operator}</h4>
-                    </div>
-                    <div className="event__edit-col"></div>
                   </div>
                   <form className="menu__form" onSubmit={(e) => updatePost(e)}>
                     <div className="menu__form-half">
