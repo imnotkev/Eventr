@@ -68,9 +68,14 @@
   cursor: pointer;
 }
 
-.logo svg {
-  font-size: 28px;
-  margin-right: 2px;
+.logo__img {
+  width: 50px;
+  height: 50px;
+}
+
+.logo__img--footer {
+  width: 40px;
+  height: 40px;
 }
 
 .logo__logged-out {

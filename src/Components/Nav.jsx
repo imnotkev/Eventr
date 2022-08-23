@@ -13,6 +13,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import UserContext from "../UserContext";
 import { ThemeContext } from "../App";
+import logo from "../Assets/logo.png";
 import "animate.css";
 
 const Nav = () => {
@@ -32,12 +33,12 @@ const Nav = () => {
                 navigate("/start");
               }}
             >
-              <CalendarMonth />
+              <img className="logo__img" src={logo} />
               Eventr
             </h1>
           ) : (
             <h1 className="logo nav__logo logo__logged-out animate__animated animate__fadeIn">
-              <CalendarMonth />
+              <img className="logo__img" src={logo} />
               Eventr
             </h1>
           )}

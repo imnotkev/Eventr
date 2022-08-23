@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { CalendarMonth } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../UserContext";
+import logo from "../Assets/logo.png";
 import "animate.css";
 
 const Footer = () => {
@@ -18,12 +19,12 @@ const Footer = () => {
                 navigate("/start");
               }}
             >
-              <CalendarMonth />
+              <img className="logo__img--footer" src={logo} />
               Eventr
             </h1>
           ) : (
             <h1 className="logo footer__logo logo__logged-out animate__animated animate__fadeIn">
-              <CalendarMonth />
+              <img className="logo__img--footer" src={logo} />
               Eventr
             </h1>
           )}
