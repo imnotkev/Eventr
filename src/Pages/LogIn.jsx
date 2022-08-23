@@ -17,6 +17,7 @@ const LogIn = () => {
 
   function logInUser(e) {
     e.preventDefault();
+    window.scrollTo(0, 0);
     setLoading(true);
     setFaultyLogin(false);
     setTimeout(() => {
@@ -34,28 +35,16 @@ const LogIn = () => {
     }, 240);
   }
 
-  // function logInDemo() {
-  //   setLoading(true);
-  //   setFaultyLogin(false);
-  //   setTimeout(() => {
-  //     signInWithEmailAndPassword(auth, `demo@gmail.com`, `password`)
-  //       .then(({ user }) => {
-  //         logIn({ user });
-  //         setLoading(false);
-  //       })
-  //       .catch(() => {
-  //         setFaultyLogin(true);
-  //       });
-  //   }, 240);
-  // }
-
   React.useEffect(() => {
+    window.scrollTo(0, 0);
+    setLoading(true);
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
         setLoggedIn(true);
         navigate("/start");
       }
+      setLoading(false);
     });
   }, []);
 
@@ -118,18 +107,10 @@ const LogIn = () => {
                       </button>
                     )}
                   </form>
-                  {/* <button
-                    className="btn login__btn"
-                    onClick={() => {
-                      logInDemo();
-                    }}
-                  >
-                    Demo
-                  </button> */}
                   <div className="demo-login">
-                    För demo: <br />
-                    demo@gmail.com <br />
-                    password
+                    DEMO: <br />
+                    email: demo@gmail.com <br />
+                    password: password
                   </div>
                 </div>
                 <Login className="icon-1" />

@@ -29,6 +29,7 @@ const History = () => {
   useDocumentTitle("Tidigare händelser | Eventr");
   const [loading, setLoading] = React.useState(true);
   const [results, setResults] = React.useState([]);
+  const [showFilter, setShowFilter] = React.useState(false);
   const [constResult, setConstResult] = React.useState([]);
   const [popUp, setPopUp] = React.useState(false);
   const [delEvent, setDelEvent] = React.useState([]);
@@ -140,6 +141,7 @@ const History = () => {
   }
 
   React.useEffect(() => {
+    window.scrollTo(0, 0);
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
@@ -185,7 +187,7 @@ const History = () => {
                 </>
               ) : (
                 <>
-                  <div className="event__header animate__animated animate__fadeIn animate__faster">
+                  <div className="event__header event__header--desktop animate__animated animate__fadeIn animate__faster">
                     <div className="event__header--input--wrapper">
                       <h3 className="event__sub-title">Datum:</h3>
                       <form
@@ -250,6 +252,95 @@ const History = () => {
                       </select>
                     </div>
                   </div>
+                  {/* MOBILE HEADER */}
+                  {showFilter && (
+                    <div className="event__header event__header--mobile animate__animated animate__fadeIn animate__faster">
+                      <div className="event__header--input--wrapper">
+                        <h3 className="event__sub-title">Datum:</h3>
+                        <form
+                          className="event__header--form"
+                          onSubmit={() => {
+                            getEvents(browseDate);
+                            setShowFilter(false);
+                          }}
+                        >
+                          <input
+                            type="date"
+                            className="event__header--input"
+                            value={browseDate}
+                            onChange={(e) => {
+                              setBrowseDate(e.target.value);
+                              setDateBtnActive(true);
+                            }}
+                          ></input>
+                          {dateBtnActive && (
+                            <button className="btn event__header--btn">
+                              <Forward />
+                            </button>
+                          )}
+                        </form>
+                      </div>
+                      <div className="event__header--input--wrapper">
+                        <h3 className="event__sub-title">Kommun:</h3>
+                        <select
+                          list="location"
+                          className="event__header--input"
+                          value={browseLocation}
+                          onChange={(e) => {
+                            setBrowseLocation(e.target.value);
+                            filterLocation(e.target.value);
+                          }}
+                        >
+                          <option value="DEFAULT">Alla</option>
+                          <option value="KGA">Karlskoga</option>
+                          <option value="KHN">Kristinehamn</option>
+                          <option value="FSD">Filipstad</option>
+                          <option value="HFS">Hällefors</option>
+                          <option value="DFS">Degerfors</option>
+                          <option value="SFS">Storfors</option>
+                          <option value="LSF">Lesjöfors</option>
+                        </select>
+                      </div>
+                      <div className="event__header--input--wrapper">
+                        <h3 className="event__sub-title">Larm:</h3>
+                        <select
+                          list="alarm"
+                          className="event__header--input"
+                          value={browseAlarm}
+                          onChange={(e) => {
+                            setBrowseAlarm(e.target.value);
+                            filterAlarm(e.target.value);
+                          }}
+                        >
+                          <option value="DEFAULT">Alla</option>
+                          <option value="Inbrottslarm">Inbrottslarm</option>
+                          <option value="Automatlarm">Automatlarm</option>
+                          <option value="Fellarm">Fellarm</option>
+                          <option value="Sabotagelarm">Sabotagelarm</option>
+                          <option value="Driftlarm">Driftlarm</option>
+                          <option value="Övrigt/annat">Övrigt/annat</option>
+                        </select>
+                      </div>
+                    </div>
+                  )}
+                  {showFilter ? (
+                    <button
+                      className="btn filter__btn"
+                      onClick={() => setShowFilter(false)}
+                    >
+                      dölj
+                    </button>
+                  ) : (
+                    <button
+                      className="btn filter__btn animate__animated animate__fadeIn"
+                      onClick={() => setShowFilter(true)}
+                    >
+                      FILTER
+                    </button>
+                  )}
+                  <span className="event__date animate__animated animate__fadeIn">
+                    Datum: {browseDate}
+                  </span>
                   {results.length === 0 && (
                     <>
                       <h3 className="menu__sub-title no-results__title">
@@ -278,14 +369,13 @@ const History = () => {
                       key={event.id}
                     >
                       <div className="event__left-col">
-                        <div className="col__container">
+                        <div className="col__container--1">
                           <h3 className="event__time">{event.time}</h3>
-                          <p className="event__date">{event.date}</p>
                         </div>
-                        <div className="col__container">
+                        <div className="col__container--2">
                           <h4 className="event__location">{event.location}</h4>
                         </div>
-                        <div className="col__container">
+                        <div className="col__container--3">
                           <h3 className="event__title">
                             {event.alarm} - {event.object}
                           </h3>
@@ -294,8 +384,6 @@ const History = () => {
                       </div>
                       <div className="event__right-col">
                         <h4 className="event__operator">{event.operator}</h4>
-                      </div>
-                      <div className="event__edit-col">
                         <Settings
                           onClick={() => navigate(`/events/edit/${event.id}`)}
                         />
@@ -335,7 +423,9 @@ const History = () => {
       {popUp && (
         <div className="menu__pop-up--window">
           <div className="pop-up">
-            <h3 className="menu__sub-title pop-up__title">Är du säker?</h3>
+            <h3 className="menu__sub-title pop-up__title">
+              Är du säker att du vill ta bort:
+            </h3>
             <h4 className="event__sub-title pop-up__sub-title">
               "{delEvent.alarm} - {delEvent.object}"
             </h4>

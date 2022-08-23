@@ -32,6 +32,7 @@ const Add = () => {
   /* FUNCTIONS */
   function createEvent(e) {
     e.preventDefault();
+    window.scrollTo(0, 0);
     const event = {
       date,
       time,
@@ -80,6 +81,7 @@ const Add = () => {
   }
 
   React.useEffect(() => {
+    window.scrollTo(0, 0);
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);

@@ -20,6 +20,7 @@ const Landing = () => {
   const navigate = useNavigate();
 
   React.useEffect(() => {
+    window.scrollTo(0, 0);
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);

@@ -67,6 +67,7 @@ const Event = () => {
   }
 
   React.useEffect(() => {
+    window.scrollTo(0, 0);
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
@@ -136,14 +137,13 @@ const Event = () => {
                   <div className="event-edit">
                     <div className="event animate__animated animate__fadeIn animate__faster">
                       <div className="event__left-col">
-                        <div className="col__container">
+                        <div className="col__container--1">
                           <h3 className="event__time">{time}</h3>
-                          <p className="event__date">{date}</p>
                         </div>
-                        <div className="col__container">
+                        <div className="col__container--2">
                           <h4 className="event__location">{location}</h4>
                         </div>
-                        <div className="col__container">
+                        <div className="col__container--3">
                           <h3 className="event__title">
                             {alarm} - {object}
                           </h3>
