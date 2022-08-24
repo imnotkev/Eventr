@@ -13,19 +13,18 @@ const Footer = () => {
       <div className="footer__container ">
         <div className="row">
           {user ? (
-            <h1
-              className="logo footer__logo animate__animated animate__fadeIn"
-              onClick={() => {
-                navigate("/start");
-              }}
-            >
-              <img className="logo__img--footer" src={logo} />
-              Eventr
+            <h1 className="logo footer__logo animate__animated animate__fadeIn">
+              <img
+                className=" logo__img--footer"
+                src={logo}
+                onClick={() => {
+                  navigate("/start");
+                }}
+              />
             </h1>
           ) : (
             <h1 className="logo footer__logo logo__logged-out animate__animated animate__fadeIn">
               <img className="logo__img--footer" src={logo} />
-              Eventr
             </h1>
           )}
           <span className="footer__copyright animate__animated animate__fadeIn">

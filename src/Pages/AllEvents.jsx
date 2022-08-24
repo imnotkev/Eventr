@@ -4,9 +4,12 @@ import {
   ArrowBack,
   Settings,
   RestartAlt,
-  Forward,
   NoteAdd,
   Home,
+  KeyboardArrowDown,
+  KeyboardArrowUp,
+  ArrowForward,
+  Done,
 } from "@mui/icons-material";
 import { db, auth } from "../Firebase/init";
 
@@ -205,7 +208,7 @@ const History = () => {
                         ></input>
                         {dateBtnActive && (
                           <button className="btn event__header--btn">
-                            <Forward />
+                            <Done />
                           </button>
                         )}
                       </form>
@@ -275,7 +278,7 @@ const History = () => {
                           ></input>
                           {dateBtnActive && (
                             <button className="btn event__header--btn">
-                              <Forward />
+                              <Done />
                             </button>
                           )}
                         </form>
@@ -325,17 +328,17 @@ const History = () => {
                   )}
                   {showFilter ? (
                     <button
-                      className="btn filter__btn"
+                      className="btn filter__btn  animate__animated animate__fadeIn animate__faster"
                       onClick={() => setShowFilter(false)}
                     >
-                      dölj
+                      dölj <KeyboardArrowUp className="filter__btn--icon" />
                     </button>
                   ) : (
                     <button
-                      className="btn filter__btn animate__animated animate__fadeIn"
+                      className="btn filter__btn  animate__animated animate__fadeIn animate__faster"
                       onClick={() => setShowFilter(true)}
                     >
-                      FILTER
+                      FILTER <KeyboardArrowDown className="filter__btn--icon" />
                     </button>
                   )}
                   <span className="event__date animate__animated animate__fadeIn">

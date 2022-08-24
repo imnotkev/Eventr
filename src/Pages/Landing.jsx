@@ -35,43 +35,37 @@ const Landing = () => {
         <div className="row">
           <div className="menu--wrapper">
             <div className="menu__body">
-              <div className="menu__content animate__animated animate__fadeIn animate__faster">
-                {!user ? (
+              {!user ? (
+                <div className="menu__content animate__animated animate__fadeIn animate__faster">
                   <div className="skeleton menu__title--skeleton"></div>
-                ) : (
+                  <div className="skeleton sub-title__skeleton"></div>
+                  <div className="skeleton btn__skeleton"></div>
+                  <div className="skeleton btn__skeleton"></div>
+                  <div className="skeleton btn__skeleton"></div>
+                </div>
+              ) : (
+                <div className="menu__content animate__animated animate__fadeIn animate__faster">
                   <h2 className="menu__title">Välkommen till Eventr!</h2>
-                )}
-                {!user ? (
-                  <div className="menu__loading">
-                    {" "}
-                    <div className="skeleton sub-title__skeleton"></div>
-                    <div className="skeleton btn__skeleton"></div>
-                    <div className="skeleton btn__skeleton"></div>
-                    <div className="skeleton btn__skeleton"></div>
-                  </div>
-                ) : (
-                  <>
-                    <h3 className="menu__sub-title">Vad vill du göra?</h3>
-                    <button className="btn" onClick={() => navigate("/add")}>
-                      <NoteAdd />
-                      Rapportera händelse
-                    </button>
-                    <button className="btn" onClick={() => navigate("/events")}>
-                      <History />
-                      Visa händelser
-                    </button>
-                    <button
-                      className="btn"
-                      onClick={() => {
-                        logOut();
-                      }}
-                    >
-                      <Logout />
-                      Logga ut
-                    </button>
-                  </>
-                )}
-              </div>
+                  <h3 className="menu__sub-title">Vad vill du göra?</h3>
+                  <button className="btn" onClick={() => navigate("/add")}>
+                    <NoteAdd />
+                    Rapportera händelse
+                  </button>
+                  <button className="btn" onClick={() => navigate("/events")}>
+                    <History />
+                    Visa händelser
+                  </button>
+                  <button
+                    className="btn"
+                    onClick={() => {
+                      logOut();
+                    }}
+                  >
+                    <Logout />
+                    Logga ut
+                  </button>
+                </div>
+              )}
               <FireExtinguisher className="icon-1" />
               <NotificationsNone className="icon-2" />
             </div>

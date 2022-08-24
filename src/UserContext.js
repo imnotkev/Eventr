@@ -12,14 +12,12 @@ export function UserProvider({ children }) {
   const logIn = (user) => {
     setUser(user);
     setLoggedIn(true);
-    console.log("loggar in");
   };
 
   const logOut = () => {
     signOut(auth);
     setUser(false);
     setLoggedIn(false);
-    console.log("loggar ut");
   };
 
   return (

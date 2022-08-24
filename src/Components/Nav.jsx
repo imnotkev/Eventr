@@ -110,6 +110,30 @@ const Nav = () => {
             </div>
           </>
         )}
+        {!user && (
+          <div className="nav__container--right nav__list--desktop animate__animated animate__fadeIn">
+            <span
+              className="nav__list--anchor--primary"
+              onClick={() => {
+                toggleTheme();
+              }}
+            >
+              {theme === "light" ? <DarkMode /> : <LightMode />}
+            </span>
+          </div>
+        )}
+        {!user && (
+          <div className="nav__container--right nav__list--mobile animate__animated animate__fadeIn">
+            <span
+              className="nav__list--anchor--primary"
+              onClick={() => {
+                toggleTheme();
+              }}
+            >
+              {theme === "light" ? <DarkMode /> : <LightMode />}
+            </span>
+          </div>
+        )}
       </div>
       {/* MOBILE-MENU */}
       {user && (

@@ -278,9 +278,9 @@ const Add = () => {
                             Lägg till
                           </button>
                         ) : (
-                          <span className="btn form__btn btn--missing">
+                          <button className="btn form__btn btn--missing">
                             Lägg till
-                          </span>
+                          </button>
                         )}
                       </div>
                     </div>
